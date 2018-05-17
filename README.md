@@ -1,18 +1,9 @@
 # EngineIoClientDotNet
 ====================
 
-Engine.IO Client Library for .Net
+Fork of Engine.IO Client Library for .Net
 
-This is the Engine.IO Client Library for C#, which is ported from the [JavaScript client](https://github.com/Automattic/engine.io-client).
-
-
-## Installation
-Nuget install:
-```
-Install-Package EngineIoClientDotNet
-```
-
-* NuGet Package: [![EngineIoClientDotNet](https://img.shields.io/nuget/v/EngineIoClientDotNet.svg?maxAge=2592000)](https://www.nuget.org/packages/EngineIoClientDotNet/)
+This is a fork of the Engine.IO Client Library for C#, which is ported from the [JavaScript client](https://github.com/Automattic/engine.io-client).
 
 
 ## Usage
@@ -67,7 +58,7 @@ In linux this will stop after starting test server. Start xunit tests within a n
 grunt testClient
 ```
 ## Framework Versions
-.NETFramework v3.5, .NETFramework v4.0, .NETFramework v4.5
+.NETFramework v3.5, .NETFramework v4.0, .NETFramework v4.4, .NETStandard v1.3,
 
 
 ## License

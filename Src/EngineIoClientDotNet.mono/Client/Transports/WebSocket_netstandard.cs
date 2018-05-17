@@ -51,6 +51,7 @@ namespace Quobject.EngineIoClientDotNet.Client.Transports
                     security.AllowNameMismatchCertificate = true;
                 }
             }
+
             ws.Opened += ws_Opened;
             ws.Closed += ws_Closed;
             ws.MessageReceived += ws_MessageReceived;
@@ -62,13 +63,14 @@ namespace Quobject.EngineIoClientDotNet.Client.Transports
                 destUrl.Scheme = "https";
             else
                 destUrl.Scheme = "http";
-
+#if NETSTANDARD2_0
             // We don't want to overwrite a user defined proxy.
             var hasNoUserDefinedProxy = Proxy == null;
             if (hasNoUserDefinedProxy)
             {
                 Proxy = WebRequest.DefaultWebProxy;
             }
+#endif
 
             // The "Proxy" property could be null, in this case we'll let "IsBypassed" be true, so no proxy is used.
             var useProxy = !(Proxy?.IsBypassed(destUrl.Uri) ?? true);
