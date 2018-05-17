@@ -62,10 +62,19 @@ namespace Quobject.EngineIoClientDotNet.Client.Transports
                 destUrl.Scheme = "https";
             else
                 destUrl.Scheme = "http";
-            var useProxy = !WebRequest.DefaultWebProxy.IsBypassed(destUrl.Uri);
+
+            // We don't want to overwrite a user defined proxy.
+            var hasNoUserDefinedProxy = Proxy == null;
+            if (hasNoUserDefinedProxy)
+            {
+                Proxy = WebRequest.DefaultWebProxy;
+            }
+
+            // The "Proxy" property could be null, in this case we'll let "IsBypassed" be true, so no proxy is used.
+            var useProxy = !(Proxy?.IsBypassed(destUrl.Uri) ?? true);
             if (useProxy)
             {
-                var proxyUrl = WebRequest.DefaultWebProxy.GetProxy(destUrl.Uri);
+                var proxyUrl = Proxy.GetProxy(destUrl.Uri);
                 var proxy = new HttpConnectProxy(new DnsEndPoint(proxyUrl.Host, proxyUrl.Port), destUrl.Host);
                 ws.Proxy = proxy;
             }
@@ -141,7 +150,7 @@ namespace Quobject.EngineIoClientDotNet.Client.Transports
                 //var log = LogManager.GetLogger(Global.CallerName());
 
                 if (data is string)
-                {                    
+                {
                     webSocket.ws.Send((string)data);
                 }
                 else if (data is byte[])
@@ -169,7 +178,6 @@ namespace Quobject.EngineIoClientDotNet.Client.Transports
         {
             if (ws != null)
             {
-          
                 try
                 {
                     ws.Close();

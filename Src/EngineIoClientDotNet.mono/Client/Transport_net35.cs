@@ -7,7 +7,7 @@ using Quobject.EngineIoClientDotNet.Modules;
 using Quobject.EngineIoClientDotNet.Parser;
 using System;
 using System.Collections.Generic;
-
+using System.Net;
 
 namespace Quobject.EngineIoClientDotNet.Client
 {
@@ -58,6 +58,7 @@ namespace Quobject.EngineIoClientDotNet.Client
         protected bool Secure;
         protected bool TimestampRequests;
         protected int Port;
+        protected IWebProxy Proxy;
         protected string Path;
         protected string Hostname;
         protected string TimestampParam;
@@ -75,6 +76,7 @@ namespace Quobject.EngineIoClientDotNet.Client
             this.Path = options.Path;
             this.Hostname = options.Hostname;
             this.Port = options.Port;
+            this.Proxy = options.Proxy;
             this.Secure = options.Secure;
             this.Query = options.Query;
             this.TimestampParam = options.TimestampParam;
@@ -184,6 +186,7 @@ namespace Quobject.EngineIoClientDotNet.Client
             public bool TimestampRequests = true;
             public int Port;
             public int PolicyPort;
+            public IWebProxy Proxy;
             public Dictionary<string, string> Query;
             public bool IgnoreServerCertificateValidation = false;
             internal Socket Socket;

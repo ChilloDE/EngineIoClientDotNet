@@ -6,7 +6,7 @@ using Quobject.EngineIoClientDotNet.Modules;
 using Quobject.EngineIoClientDotNet.Parser;
 using System;
 using System.Collections.Generic;
-
+using System.Net;
 
 namespace Quobject.EngineIoClientDotNet.Client
 {
@@ -57,6 +57,7 @@ namespace Quobject.EngineIoClientDotNet.Client
         protected bool Secure;
         protected bool TimestampRequests;
         protected int Port;
+        protected IWebProxy Proxy;
         protected string Path;
         protected string Hostname;
         protected string TimestampParam;
@@ -76,6 +77,7 @@ namespace Quobject.EngineIoClientDotNet.Client
             this.Path = options.Path;
             this.Hostname = options.Hostname;
             this.Port = options.Port;
+            this.Proxy = options.Proxy;
             this.Secure = options.Secure;
             this.Query = options.Query;
             this.TimestampParam = options.TimestampParam;
@@ -186,6 +188,17 @@ namespace Quobject.EngineIoClientDotNet.Client
             public bool TimestampRequests = true;
             public int Port;
             public int PolicyPort;
+            /// <summary>
+            /// The proxy that will be used for the connection. 
+            /// When Targeting .NET Standard 2.0:
+            ///     If null the systems default proxy will be used or none of no default proxy is set.
+            /// When .NET Standard &lt; 2.0:
+            ///     If null no proxy will be used. If the systems default proxy is configured,
+            ///     it needs to be provided here.
+            ///     .... actually I'm not sure
+            ///     .... TODO: I'll have to test this.
+            /// </summary>
+            public IWebProxy Proxy;
             public Dictionary<string, string> Query;
             public bool IgnoreServerCertificateValidation = false;
             internal Socket Socket;

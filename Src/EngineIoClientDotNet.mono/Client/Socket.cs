@@ -8,7 +8,7 @@ using Quobject.EngineIoClientDotNet.Thread;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.Net;
 
 namespace Quobject.EngineIoClientDotNet.Client
 {
@@ -49,6 +49,7 @@ namespace Quobject.EngineIoClientDotNet.Client
         private bool Upgrading;
         private bool RememberUpgrade;
         private int Port;
+        private IWebProxy Proxy;
         private int PolicyPort;
         private int PrevBufferLen;
         private long PingInterval;
@@ -142,6 +143,7 @@ namespace Quobject.EngineIoClientDotNet.Client
             Secure = options.Secure;
             Hostname = options.Hostname;
             Port = options.Port;
+            Proxy = options.Proxy;
             Query = options.QueryString != null ? ParseQS.Decode(options.QueryString) : new Dictionary<string, string>();
 
             if (options.Query != null)
@@ -207,6 +209,7 @@ namespace Quobject.EngineIoClientDotNet.Client
             {
                 Hostname = Hostname,
                 Port = Port,
+                Proxy = Proxy,
                 Secure = Secure,
                 Path = Path,
                 Query = query,

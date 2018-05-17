@@ -5,6 +5,7 @@ using Quobject.EngineIoClientDotNet.Parser;
 using System;
 using System.Collections.Generic;
 using WebSocket4Net;
+using SuperSocket.ClientEngine.Proxy;
 
 namespace Quobject.EngineIoClientDotNet.Client.Transports
 {
@@ -48,6 +49,28 @@ namespace Quobject.EngineIoClientDotNet.Client.Transports
             ws.MessageReceived += ws_MessageReceived;
             ws.DataReceived += ws_DataReceived;
             ws.Error += ws_Error;
+
+            var destUrl = new UriBuilder(this.Uri());
+            if (this.Secure)
+                destUrl.Scheme = "https";
+            else
+                destUrl.Scheme = "http";
+
+            // We don't want to overwrite a user defined proxy.
+            var hasNoUserDefinedProxy = Proxy == null;
+            if (hasNoUserDefinedProxy)
+            {
+                Proxy = WebRequest.DefaultWebProxy;
+            }
+
+            // The "Proxy" property could be null, in this case we'll let "IsBypassed" be true, so no proxy is used.
+            var useProxy = !(Proxy?.IsBypassed(destUrl.Uri) ?? true);
+            if (useProxy)
+            {
+                var proxyUrl = Proxy.GetProxy(destUrl.Uri);
+                var proxy = new HttpConnectProxy(new DnsEndPoint(proxyUrl.Host, proxyUrl.Port), destUrl.Host);
+                ws.Proxy = proxy;
+            }
             ws.Open();                            
         }
 

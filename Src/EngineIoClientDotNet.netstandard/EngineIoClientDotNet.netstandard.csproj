@@ -30,6 +30,7 @@
     <Compile Include="..\EngineIoClientDotNet.mono\Client\Transport.cs" Link="Client\Transport.cs" />
     <Compile Include="..\EngineIoClientDotNet.mono\Client\Transports\Polling.cs" Link="Client\Transports\Polling.cs" />
     <Compile Include="..\EngineIoClientDotNet.mono\Client\Transports\PollingXHR_netstandard.cs" Link="Client\Transports\PollingXHR_netstandard.cs" />
+    <Compile Include="..\EngineIoClientDotNet.mono\Client\Transports\WebSocket_netstandard.cs" Link="Client\Transports\WebSocket_netstandard.cs" />
     <Compile Include="..\EngineIoClientDotNet.mono\ComponentEmitter\Emitter.cs" Link="ComponentEmitter\Emitter.cs" />
     <Compile Include="..\EngineIoClientDotNet.mono\Modules\Global.cs" Link="Modules\Global.cs" />
     <Compile Include="..\EngineIoClientDotNet.mono\Modules\LogManager.cs" Link="Modules\LogManager.cs" />
